@@ -23,14 +23,14 @@ jobs:
       uses: docker/login-action@v2
       with:
         registry: https://fruoccopublic.azurecr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_c8aa21da7cfc459894770d611500f95f }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_f46a29cede7944e394017c24a77ca4ee }}
+        username: ${{ secrets.AzureAppService_ContainerUsername_daebae676f344b988fa909911d06eed0 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_965db3b0ff274714b1079e443f4cf7ab }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: fruoccopublic.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_c8aa21da7cfc459894770d611500f95f }}/sample-app-aoai-chatgpt:${{ github.sha }}
+        tags: fruoccopublic.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_daebae676f344b988fa909911d06eed0 }}/sample-app-aoai-chatgpt:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -47,5 +47,5 @@ jobs:
       with:
         app-name: '6cc6ecb1-ef72-571c-8aa5-1df67798c2d7'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_2c65b5d9265147c5ba0f0f82b655e40b }}
-        images: 'fruoccopublic.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_c8aa21da7cfc459894770d611500f95f }}/sample-app-aoai-chatgpt:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_1c19784d74694b989d5ccdfebc82d224 }}
+        images: 'fruoccopublic.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_daebae676f344b988fa909911d06eed0 }}/sample-app-aoai-chatgpt:${{ github.sha }}'
