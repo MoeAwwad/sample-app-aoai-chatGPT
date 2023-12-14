@@ -585,8 +585,8 @@ const Chat = () => {
                                     className={styles.chatIcon}
                                     aria-hidden="true"
                                 />
-                                <h1 className={styles.chatEmptyStateTitle}>Start chatting</h1>
-                                <h2 className={styles.chatEmptyStateSubtitle}>This chatbot is configured to answer your questions</h2>
+                                <h1 className={styles.chatEmptyStateTitle}>Hello I Am Albert</h1>
+                                <h2 className={styles.chatEmptyStateSubtitle}>Feel free to ask me anything</h2>
                             </Stack>
                         ) : (
                             <div className={styles.chatMessageStream} style={{ marginBottom: isLoading ? "40px" : "0px"}} role="log">
@@ -675,7 +675,7 @@ const Chat = () => {
                                             color: '#FFFFFF',
                                         },
                                         root: {
-                                            color: '#FFFFFF',
+                                            color: '#89edfa',
                                             background: disabledButton() ? "#BDBDBD" : "radial-gradient(109.81% 107.82% at 100.1% 90.19%, #0F6CBD 33.63%, #2D87C3 70.31%, #8DDDD8 100%)",
                                             cursor: disabledButton() ? "" : "pointer"
                                         },

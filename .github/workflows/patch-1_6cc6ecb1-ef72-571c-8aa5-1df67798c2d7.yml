@@ -1,0 +1,51 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy container app to Azure Web App - 6cc6ecb1-ef72-571c-8aa5-1df67798c2d7
+
+on:
+  push:
+    branches:
+      - patch-1
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Log in to registry
+      uses: docker/login-action@v2
+      with:
+        registry: https://fruoccopublic.azurecr.io/
+        username: ${{ secrets.AzureAppService_ContainerUsername_5db32a5dc529461fb4499851e6e17ac0 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_f607f2faa87d4e7685c33b4adf0a1c4d }}
+
+    - name: Build and push container image to registry
+      uses: docker/build-push-action@v3
+      with:
+        push: true
+        tags: fruoccopublic.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_5db32a5dc529461fb4499851e6e17ac0 }}/sample-app-aoai-chatgpt:${{ github.sha }}
+        file: ./Dockerfile
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: '6cc6ecb1-ef72-571c-8aa5-1df67798c2d7'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_fcddbe42a4ed463dae4901480f353ce6 }}
+        images: 'fruoccopublic.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_5db32a5dc529461fb4499851e6e17ac0 }}/sample-app-aoai-chatgpt:${{ github.sha }}'
